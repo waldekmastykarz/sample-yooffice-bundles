@@ -6,6 +6,7 @@
   <title></title>
   <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
   
+  <!-- build:css content/styles.css -->
   <!-- bower:css -->
   <link rel="stylesheet" href="bower_components/office-ui-fabric/dist/css/fabric.css" />
   <link rel="stylesheet" href="bower_components/office-ui-fabric/dist/css/fabric.components.css" />
@@ -13,6 +14,10 @@
   <!-- endbower -->
   <link href="content/Office.css" rel="stylesheet" type="text/css"/>
   <link href="content/app.css" rel="stylesheet" type="text/css"/>
+  <!-- endbuild -->
+  
+  <script src="//appsforoffice.microsoft.com/lib/1/hosted/Office.js"></script>
+  <!-- build:js scripts/app.js -->
   <!-- bower:js -->
   <script src="bower_components/jquery/dist/jquery.js"></script>
   <script src="bower_components/angular/angular.js"></script>
@@ -22,20 +27,19 @@
   <script src="bower_components/adal-angular/lib/adal-angular.js"></script>
   <script src="bower_components/office-ui-fabric/dist/js/jquery.fabric.js"></script>
   <!-- endbower -->
-  <script src="//appsforoffice.microsoft.com/lib/1/hosted/Office.js"></script>
-</head>
-<body>
-
-  <div id="container">
-    <div data-ng-view></div>
-  </div>
-
   <script src="app/app.module.js"></script>
   <script src="app/app.config.js"></script>
   <script src="app/app.adalconfig.js"></script>
   <script src="app/app.routes.js"></script>
   <script src="app/services/data.service.js"></script>
   <script src="app/home/home.controller.js"></script>
+  <!-- endbuild -->
+</head>
+<body>
+
+  <div id="container">
+    <div data-ng-view></div>
+  </div>
 
 </body>
 </html>

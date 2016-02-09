@@ -167,11 +167,8 @@ gulp.task('dist-remove', function () {
  */
 gulp.task('dist-copy-files', function() {
   return gulp.src([
-    './app*/**/*',
-    './bower_components/**/*',
-    './content/**/*',
+    './app/**/*.html',
     './images/**/*',
-    './scripts/**/*',
     './manifest-*.xml',
     './package.json'
   ], { base: './' }).pipe(gulp.dest(config.release));
@@ -212,6 +209,7 @@ gulp.task('dist-wiredependencies', function() {
         .pipe($.wiredep({
             exclude: 'bower_components/microsoft.office.js/scripts/office/1/office.js'
         }))
+        .pipe($.useref())
         .pipe(gulp.dest(config.release));
 });
 
@@ -222,7 +220,6 @@ gulp.task('dist', function () {
   runSequence(
     ['dist-remove'],
     ['dist-wiredependencies'],
-    ['dist-copy-files'],
-    ['dist-minify']
+    ['dist-copy-files']
     );
 });
