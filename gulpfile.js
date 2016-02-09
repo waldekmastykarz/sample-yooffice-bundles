@@ -12,7 +12,8 @@ var runSequence = require('run-sequence');
 var Xml2Js = require('xml2js');
 
 var config = {
-  release: './dist'
+  release: './dist',
+  tmp: './tmp'
 };
 
 gulp.task('help', $.taskListing.withFilters(function (task) {
@@ -159,7 +160,8 @@ gulp.task('validate-highResolutionIconUrl', function() {
  * Removes existing dist folder
  */
 gulp.task('dist-remove', function () {
-  return del(config.release);
+    del(config.tmp);
+    return del(config.release);
 });
 
 /**
@@ -167,7 +169,6 @@ gulp.task('dist-remove', function () {
  */
 gulp.task('dist-copy-files', function() {
   return gulp.src([
-    './app/**/*.html',
     './images/**/*',
     './manifest-*.xml',
     './package.json'
@@ -204,11 +205,25 @@ gulp.task('dist-minify-css', function() {
     .pipe(gulp.dest(config.release));
 });
 
-gulp.task('dist-wiredependencies', function() {
+gulp.task('dist-templatecache', function() {
+    return gulp.src('./app/**/*.html')
+        .pipe($.angularTemplatecache(
+            'templates.js',
+            {
+                module: 'officeAddin',
+                root: 'app/',
+                standAlone: false
+            }
+        ))
+        .pipe(gulp.dest(config.tmp));
+});
+
+gulp.task('dist-wiredependencies', ['dist-templatecache'], function() {
     gulp.src('./index.html')
         .pipe($.wiredep({
             exclude: 'bower_components/microsoft.office.js/scripts/office/1/office.js'
         }))
+        .pipe($.inject(gulp.src('./tmp/templates.js', {read:false}), {name:'templates'}))
         .pipe($.useref())
         .pipe(gulp.dest(config.release));
 });
