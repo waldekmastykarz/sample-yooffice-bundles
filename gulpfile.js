@@ -173,7 +173,6 @@ gulp.task('dist-copy-files', function() {
     './images/**/*',
     './scripts/**/*',
     './manifest-*.xml',
-    './index.html',
     './package.json'
   ], { base: './' }).pipe(gulp.dest(config.release));
 });
@@ -208,12 +207,21 @@ gulp.task('dist-minify-css', function() {
     .pipe(gulp.dest(config.release));
 });
 
+gulp.task('dist-wiredependencies', function() {
+    gulp.src('./index.html')
+        .pipe($.wiredep({
+            exclude: 'bower_components/microsoft.office.js/scripts/office/1/office.js'
+        }))
+        .pipe(gulp.dest(config.release));
+});
+
 /**
  * Creates a release version of the project
  */
 gulp.task('dist', function () {
   runSequence(
     ['dist-remove'],
+    ['dist-wiredependencies'],
     ['dist-copy-files'],
     ['dist-minify']
     );

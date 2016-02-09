@@ -1,5 +1,5 @@
 {
-  "name":"my-office-project",
+  "name": "my-office-project",
   "version": "0.1.0",
   "scripts": {
     "postinstall": "bower install"
@@ -13,6 +13,7 @@
     "gulp-task-listing": "^1.0.1",
     "gulp-uglify": "^1.5.1",
     "gulp-webserver": "^0.9.1",
+    "gulp-wiredep": "0.0.0",
     "minimist": "^1.2.0",
     "run-sequence": "^1.1.5",
     "xml2js": "^0.4.15",
