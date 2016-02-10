@@ -207,6 +207,9 @@ gulp.task('dist-minify-css', function() {
 
 gulp.task('dist-templatecache', function() {
     return gulp.src('./app/**/*.html')
+        .pipe($.htmlmin({
+            collapseWhitespace: true
+         }))
         .pipe($.angularTemplatecache(
             'templates.js',
             {
@@ -225,6 +228,7 @@ gulp.task('dist-wiredependencies', ['dist-templatecache'], function() {
         }))
         .pipe($.inject(gulp.src('./tmp/templates.js', {read:false}), {name:'templates'}))
         .pipe($.useref())
+        .pipe($.if('*.html', $.htmlmin({collapseWhitespace: true})))
         .pipe(gulp.dest(config.release));
 });
 
