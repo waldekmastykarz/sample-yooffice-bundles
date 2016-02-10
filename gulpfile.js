@@ -222,7 +222,10 @@ gulp.task('dist-templatecache', function() {
 });
 
 gulp.task('dist-wiredependencies', ['dist-templatecache'], function() {
+    var packageJson = JSON.parse(fs.readFileSync('./package.json', 'utf-8'));
+    
     gulp.src('./index.html')
+        .pipe($.replace('@packageVersion@', packageJson.version))
         .pipe($.wiredep({
             exclude: 'bower_components/microsoft.office.js/scripts/office/1/office.js'
         }))
