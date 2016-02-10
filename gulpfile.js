@@ -229,6 +229,7 @@ gulp.task('dist-wiredependencies', ['dist-templatecache'], function() {
         .pipe($.inject(gulp.src('./tmp/templates.js', {read:false}), {name:'templates'}))
         .pipe($.useref())
         .pipe($.if('*.html', $.htmlmin({collapseWhitespace: true})))
+        .pipe($.if('*.css', $.cssnano()))
         .pipe(gulp.dest(config.release));
 });
 
