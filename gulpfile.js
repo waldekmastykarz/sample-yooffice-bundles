@@ -230,6 +230,7 @@ gulp.task('dist-wiredependencies', ['dist-templatecache'], function() {
         .pipe($.useref())
         .pipe($.if('*.html', $.htmlmin({collapseWhitespace: true})))
         .pipe($.if('*.css', $.cssnano()))
+        .pipe($.if('*.js', $.uglify()))
         .pipe(gulp.dest(config.release));
 });
 
