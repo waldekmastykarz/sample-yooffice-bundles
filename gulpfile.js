@@ -237,6 +237,17 @@ gulp.task('dist-wiredependencies', ['dist-templatecache'], function() {
         .pipe(gulp.dest(config.release));
 });
 
+gulp.task('serve-dist', ['dist'], function () {
+  gulp.src('./dist')
+    .pipe(webserver({
+      https: true,
+      port: '8443',
+      host: 'localhost',
+      directoryListing: true,
+      fallback: 'index.html'
+    }));
+});
+
 /**
  * Creates a release version of the project
  */
